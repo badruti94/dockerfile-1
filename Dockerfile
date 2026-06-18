@@ -1,6 +1,6 @@
 FROM alpine:3
 
 RUN mkdir hello
-COPY text/*.txt hello
+COPY text/* hello
 
-CMD cat "hello/world.txt"
+CMD ls -l hello
