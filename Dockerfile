@@ -1,6 +1,8 @@
-FROM alpine:3
+FROM golang:1.18-alpine
 
-RUN mkdir hello
-COPY text/* hello
+RUN mkdir app
+COPY main.go app
 
-CMD ls -l hello
+EXPOSE 8080
+
+CMD go run app/main.go
