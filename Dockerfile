@@ -1,13 +1,12 @@
 FROM golang:1.18-alpine
 
-RUN mkdir /app
+ARG app=main
 
-RUN addgroup -S pzngroup
-RUN adduser -S -D -h /app pznuser pzngroup
-RUN chown -R pznuser:pzngroup /app
-USER pznuser
-
-COPY main.go /app
+RUN mkdir app
+COPY main.go app
+RUN mv app/main.go app/${app}.go
 
 EXPOSE 8080
-CMD go run /app/main.go
+
+ENV app=${app}
+CMD go run app/${app}.go
