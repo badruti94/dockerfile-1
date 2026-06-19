@@ -1,8 +1,9 @@
-FROM golang:1.18-alpine
+FROM golang:1.18-alpine as builder
+WORKDIR /app
+COPY main.go .
+RUN go build -o /app/main main.go
 
-RUN mkdir /app/
-COPY main.go /app/
-
-EXPOSE 8080
-ENTRYPOINT [ "go", "run" ]
-CMD ["/app/main.go"]
+FROM alpine:3
+WORKDIR /app
+COPY --from=builder /app/main .
+CMD /app/main
