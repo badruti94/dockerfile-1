@@ -1,12 +1,10 @@
 FROM golang:1.18-alpine
 
-ARG app=main
-
+RUN apk --no-cache add curl
 RUN mkdir app
 COPY main.go app
-RUN mv app/main.go app/${app}.go
 
 EXPOSE 8080
 
-ENV app=${app}
-CMD go run app/${app}.go
+HEALTHCHECK --interval=5s --start-period=5s CMD curl -f http://localhost:8080/health
+CMD go run main.go
